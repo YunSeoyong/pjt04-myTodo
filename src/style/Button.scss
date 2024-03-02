@@ -1,0 +1,88 @@
+@charset "utf-8";
+@import "../style/mixin.scss";
+
+@mixin buttonColor($color) {
+    background: $color;
+
+    &:hover {
+        background: lighten($color, 7%);
+    }
+    &:active {
+        background: darken($color, 10%);
+    }
+}
+
+.Button {
+    color: #333;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s;
+
+    // size
+    &.small {
+        height: 30px;
+        font-size: var(--font-sm);
+    }
+    &.medium {
+        height: 45px;
+        font-size: var(--font-sm);
+    }
+
+    // color
+    &.white {
+        @include buttonColor(#fff);
+    }
+    &.theme {
+        @include buttonColor(#939ae1);
+        color: #fff;
+    }
+    &.edit {
+        @include buttonColor(#d1d4f4);
+        color: var(--theme-dark);
+
+        &:active {
+            color: #fff;
+        }
+    }
+
+    // type
+    &.add {
+        position: relative;
+        text-indent: -99999px;
+        width: 45px;
+        border: 1.5px solid var(--theme-color);
+        border-radius: 0 0.5rem 0.5rem 0;
+        
+        &::after,
+        &::before {
+            @include pseudoBase(block, absolute);
+            top: 8px;
+            left: 19px;
+            width: 3px;
+            height: 25px;
+            background: var(--theme-color);
+            border-radius: 3px;
+            transition: 0.2s;;
+        }
+        &::before{
+            transform: rotate(90deg);
+        }
+    
+        &:hover{
+            background: var(--theme-color);
+    
+            &::after,
+            &::before {
+                background: #fff;
+            }
+        }
+        &:active{
+            background: var(--theme-dark);
+            border-color: var(--theme-dark);
+        }
+    }
+    &.delete, &.edit {
+        width: 40px;
+        border-radius: 3px;
+    }
+}

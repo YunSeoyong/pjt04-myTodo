@@ -1,0 +1,135 @@
+@charset "utf-8";
+@import "./style/mixin.scss";
+
+
+/* 공통값 */
+.hide {
+    display: block;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    color: transparent;
+}
+:root {
+    --font-lg: clamp(2rem, 4vw, 4rem);
+    --font-md: clamp(1rem, 2vw, 1.2rem);
+    --font-sm: clamp(0.85rem, 1.4vw, 0.9rem);
+    --theme-pastel: #c2c1ff;
+    --theme-color: #939ae1;
+    --theme-dark: #6e64a5;
+}
+///////////////////////////////////////////////
+
+
+.App {
+    box-sizing: border-box;
+    min-height: 100dvh;
+    padding: 80px 0 40px 0;
+    background: rgb(255,255,255);
+    background: linear-gradient(327deg, rgba(255,255,255,1) 7%, rgba(255,228,234,1) 40%, rgba(217,226,255,1) 72%, rgba(193,230,255,1) 100%);
+
+    ul {
+        min-width: 320px;
+        width: 80vw;
+        max-width: 1240px;
+        margin: 0 auto;
+
+        li {
+            position: relative;
+            @include flexSort(space-between, top);
+            box-sizing: border-box;
+            width: 100%;
+            padding: 1em;
+            margin-bottom: 10px;
+            border-radius: 0.5rem;
+            background: white;
+            box-shadow: 0 6px 12px rgba(79, 73, 117, 0.1);
+            font-size: var(--font-sm);
+            // border: 2px solid var(--theme-color);
+            line-height: 30px;
+
+            .contents {
+                @include flexSort(space-between, top);
+                .check{
+                    width: 20px;
+                    height: 20px;
+                    margin-right: 20px;
+                    #done{
+                        display: none;
+                    }
+                    #done + label{
+                        position: relative;
+                        display: inline-block;
+                        width: 16px;
+                        height: 16px;
+                        border-radius: 2px;
+                        border: 2px solid var(--theme-color);
+                        cursor: pointer;
+                    }
+                    #done:checked + label::after{
+                        @include pseudoBase (block, absolute);
+                        top: 50%;
+                        left: 50%;
+                        width: 12px;
+                        height: 12px;
+                        background: var(--theme-pastel);
+                        transform: translate(-50%, -50%);
+                        border-radius: 1px;
+                    }
+                }
+                .memo{
+                    @include flexSort(space-between, top);
+                    flex-direction: column;
+                    .text {
+                        margin-bottom: 8px;
+                        color: var(--theme-dark);
+                        font-size: var(--font-md);
+                        font-weight: 700;
+                        line-height: 1.3em;
+                    }
+                    .date {
+                        color: var(--theme-color);
+                        font-size: 12px;
+                        line-height: 1.2em;
+                    }
+                }
+            }
+            .form {
+                margin-top: auto;
+                @include flexSort(flex, center);
+                .Button:first-child {
+                    margin: 0 8px;
+                }
+            }
+        }
+    }
+
+    @media screen and (min-width: 768px) {
+        ul {
+            @include flexSort(space-between, top);
+            flex-wrap: wrap;
+
+            li {
+                box-sizing: border-box;
+                width: 49%;
+                margin-bottom: 15px;
+                .contents {
+                    .memo {
+                        .text{
+                            margin-bottom: 20px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    @media screen and (min-width: 1024px) {
+        ul{
+            li {
+                width: 32.3%;
+                margin-bottom: 20px;
+            }
+        }
+    }
+}

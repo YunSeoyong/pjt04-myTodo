@@ -3,12 +3,19 @@
         "target": "ES5",
         "module": "CommonJS",
         "moduleDetection": "force",
+        "lib": ["dom", "es2015", "es2017", "esnext.asynciterable"],
         "strict": true,
         "allowJs": true,
         "esModuleInterop": true,
-        "jsx": "react-jsx"
+        "jsx": "react-jsx",
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "forceConsistentCasingInFileNames": true,
     },
     "include": [
-        "src"
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
     ]
 }
