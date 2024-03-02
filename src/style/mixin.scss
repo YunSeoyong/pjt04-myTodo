@@ -1,0 +1,22 @@
+@charset "utf-8";
+
+
+// 가상태그
+@mixin pseudoBase($display, $position){
+    content: "";
+    display: $display;
+    position: $position;
+}
+// flex
+@mixin flexSort($justify, $align) {
+    display: flex;
+    justify-content: $justify;
+    align-items: $align;
+}
+@mixin positionSort ($position, $top, $left, $right, $bottom) {
+    position: $position;
+    top: $top;
+    left: $left;
+    right: $right;
+    bottom: $bottom;
+}
