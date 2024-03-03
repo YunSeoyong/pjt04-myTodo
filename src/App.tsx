@@ -1,4 +1,4 @@
-import { useCallback, useReducer, useRef } from "react";
+import { useCallback, useEffect, useReducer, useRef } from "react";
 
 import "./App.scss";
 import Header from "./components/Header";
@@ -6,6 +6,8 @@ import Editor from "./components/Editor";
 import Item from "./components/Item";
 
 import { Todo } from "./types/types";
+
+import axios from 'axios';
 
 type Action = {
     type: 'CREATE';
