@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import React, { useState } from "react";
 import Button from "../elements/Button";
 import styled from "styled-components";
 import Items from "./Item";
@@ -43,7 +43,8 @@ const Editor = (props: Props) => {
     );
 };
 
-export default Editor;
+export default React.memo(Editor);
+
 const Form = styled.form`
     position: relative;
     min-width: 300px;
