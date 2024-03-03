@@ -1,4 +1,4 @@
-import { useReducer, useRef, useState } from "react";
+import { useCallback, useReducer, useRef } from "react";
 
 import "./App.scss";
 import Header from "./components/Header";
@@ -18,16 +18,36 @@ type Action = {
 } | {
     type: 'DELETE';
     id: number;
+} | {
+    type: 'TOGGLEDONE';
+    id: number;
+} | {
+    type: 'EDIT';
+    id: number;
+    newContent: string;
 }
 
 const reducer = (state: Todo[], action: Action) => {
     switch(action.type) {
         case 'CREATE': {
-            return [...state, action.data];
+            return [action.data, ...state];
         }
         case 'DELETE': {
-            return state.filter((it) => it.id !== action.id);
+            return state.filter(todo => todo.id !== action.id);
         }
+        case 'TOGGLEDONE': {
+            return state.map(todo =>
+                todo.id === action.id ? { ...todo, isDone: !todo.isDone } : todo
+            );
+        }
+        case 'EDIT': {
+            return state.map(todo =>
+                todo.id === action.id
+                ? {...todo, content: action.newContent, date: new Date()}
+                : todo
+            )
+        }
+        default: return state;
     }
 }
 
@@ -35,8 +55,9 @@ function App() {
     const [todos, dispatch] = useReducer(reducer, []);
     const idRef = useRef(0);
 
-    const onCreateTodo = (
+    const onCreateTodo = useCallback((
         text: string,
+
     ) => {
         dispatch ({
             type: 'CREATE',
@@ -47,16 +68,36 @@ function App() {
                 isDone: false
             },
         });
-    };
+    }, []);
 
-    const onDeleteTodo = (
+    const onDeleteTodo = useCallback((
         id: number
     ) => {
         dispatch ({
             type: 'DELETE',
             id: id,
         });
-    }
+    }, []);
+
+    const onToggleDone = useCallback((
+        id: number
+    ) => {
+        dispatch ({
+            type: 'TOGGLEDONE',
+            id: id,
+        });
+    }, []);
+
+    const onEditTodo = useCallback((
+        id: number,
+        newContent: string,
+    ) => {
+        dispatch ({
+            type: 'EDIT',
+            id,
+            newContent,
+        });
+    }, [])
 
   	return (
     	<div className="App">
@@ -69,6 +110,8 @@ function App() {
                     <Item 
                         key={todo.id} {...todo}
                         onDeleteTodo={onDeleteTodo}
+                        onToggleDone={onToggleDone}
+                        onEditTodo={onEditTodo}
                     />
                 )}
             </ul>
