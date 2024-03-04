@@ -7,8 +7,6 @@ import Item from "./components/Item";
 
 import { Todo } from "./types/types";
 
-import axios from 'axios';
-
 type Action = {
     type: 'CREATE';
     data: {
