@@ -7,6 +7,27 @@ import Item from "./components/Item";
 
 import { Todo } from "./types/types";
 
+const dummy: Todo[] = [
+    {
+        id: 0,
+        content: "청소하기",
+        date: new Date(2024, 1, 29),
+        isDone: true
+    },
+    {
+        id: 1,
+        content: "스터디 모임",
+        date: new Date(2024, 2, 1),
+        isDone: false
+    },
+    {
+        id: 2,
+        content: "동네 뒷산 등산",
+        date: new Date(2024, 2, 3),
+        isDone: false
+    },
+]
+
 type Action = {
     type: 'CREATE';
     data: {
@@ -28,7 +49,7 @@ type Action = {
 }
 
 const reducer = (state: Todo[], action: Action) => {
-    switch(action.type) {
+    switch (action.type) {
         case 'CREATE': {
             return [action.data, ...state];
         }
@@ -43,8 +64,8 @@ const reducer = (state: Todo[], action: Action) => {
         case 'EDIT': {
             return state.map(todo =>
                 todo.id === action.id
-                ? {...todo, content: action.newContent, date: new Date()}
-                : todo
+                    ? { ...todo, content: action.newContent, date: new Date() }
+                    : todo
             )
         }
         default: return state;
@@ -52,17 +73,17 @@ const reducer = (state: Todo[], action: Action) => {
 }
 
 function App() {
-    const [todos, dispatch] = useReducer(reducer, []);
-    const idRef = useRef(0);
+    const [todos, dispatch] = useReducer(reducer, dummy);
+    const idRef = useRef(3);
 
     const onCreateTodo = useCallback((
         text: string,
 
     ) => {
-        dispatch ({
+        dispatch({
             type: 'CREATE',
             data: {
-                id : idRef.current ++,
+                id: idRef.current++,
                 content: text,
                 date: new Date(),
                 isDone: false
@@ -73,7 +94,7 @@ function App() {
     const onDeleteTodo = useCallback((
         id: number
     ) => {
-        dispatch ({
+        dispatch({
             type: 'DELETE',
             id: id,
         });
@@ -82,7 +103,7 @@ function App() {
     const onToggleDone = useCallback((
         id: number
     ) => {
-        dispatch ({
+        dispatch({
             type: 'TOGGLEDONE',
             id: id,
         });
@@ -92,22 +113,22 @@ function App() {
         id: number,
         newContent: string,
     ) => {
-        dispatch ({
+        dispatch({
             type: 'EDIT',
             id,
             newContent,
         });
     }, [])
 
-  	return (
-    	<div className="App">
-      		<Header />
-      		<Editor 
+    return (
+        <div className="App">
+            <Header />
+            <Editor
                 onCreateTodo={onCreateTodo}
             />
             <ul>
-                {todos.map((todo) => 
-                    <Item 
+                {todos.map((todo) =>
+                    <Item
                         key={todo.id} {...todo}
                         onDeleteTodo={onDeleteTodo}
                         onToggleDone={onToggleDone}
@@ -115,8 +136,8 @@ function App() {
                     />
                 )}
             </ul>
-    	</div>
-  	);
+        </div>
+    );
 }
 
 export default App;
